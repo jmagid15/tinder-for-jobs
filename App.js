@@ -1,13 +1,59 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createStackNavigator } from '@react-navigation/stack';
 
-export default function App() {
+import AuthScreen from './screens/AuthScreen';
+import WelcomeScreen from './screens/WelcomeScreen';
+import MapScreen from './screens/MapScreen';
+import DeckScreen from './screens/DeckScreen';
+import SettingsScreen from './screens/SettingsScreen';
+import ReviewScreen from './screens/ReviewScreen';
+
+const AppFlowTabNavigator = createBottomTabNavigator();
+const MainTabNavigator = createBottomTabNavigator();
+const ReviewNavigator = createStackNavigator();
+
+const Review = () => {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-    </View>
-  );
+    <ReviewNavigator.Navigator>
+      <ReviewNavigator.Screen 
+        name='Reivew' 
+        component={ReviewScreen} 
+        options={{ 
+          title: 'Review Jobs',
+          headerRight: () => (<Text>Go right</Text>)
+        }}
+      />
+      <ReviewNavigator.Screen name='Settings' component={SettingsScreen} />
+    </ReviewNavigator.Navigator>
+  )
 }
+
+const Main = () => {
+  return (
+    <MainTabNavigator.Navigator>
+      <MainTabNavigator.Screen name='Map' component={MapScreen} />
+      <MainTabNavigator.Screen name='Deck' component={DeckScreen} />
+      <MainTabNavigator.Screen name='Review' component={Review} />
+    </MainTabNavigator.Navigator>
+  )
+}
+
+const App = () => {
+  return (
+    <NavigationContainer>
+      <AppFlowTabNavigator.Navigator>
+        <AppFlowTabNavigator.Screen name='Auth' component={AuthScreen}/>
+        <AppFlowTabNavigator.Screen name='Welcome' component={WelcomeScreen}/>
+        <AppFlowTabNavigator.Screen name='Main' component={Main} />
+      </AppFlowTabNavigator.Navigator>
+    </NavigationContainer>
+  );
+};
+
+export default App;
 
 const styles = StyleSheet.create({
   container: {
