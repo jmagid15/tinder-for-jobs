@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import { Button } from 'react-native-elements';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -21,10 +22,16 @@ const Review = () => {
       <ReviewNavigator.Screen 
         name='Reivew' 
         component={ReviewScreen} 
-        options={{ 
+        options={({ navigation }) => ({ 
           title: 'Review Jobs',
-          headerRight: () => (<Text>Go right</Text>)
-        }}
+          headerRight: () => (
+            <Button 
+              title="Settings"
+              onPress={() => {navigation.navigate('Settings')}}
+              buttonStyle={{backgroundColor:"white"}}
+              titleStyle={{color:"#007aff"}}
+            />)
+        })}
       />
       <ReviewNavigator.Screen name='Settings' component={SettingsScreen} />
     </ReviewNavigator.Navigator>
@@ -45,8 +52,8 @@ const App = () => {
   return (
     <NavigationContainer>
       <AppFlowTabNavigator.Navigator>
+      <AppFlowTabNavigator.Screen name='Welcome' component={WelcomeScreen}/>
         <AppFlowTabNavigator.Screen name='Auth' component={AuthScreen}/>
-        <AppFlowTabNavigator.Screen name='Welcome' component={WelcomeScreen}/>
         <AppFlowTabNavigator.Screen name='Main' component={Main} />
       </AppFlowTabNavigator.Navigator>
     </NavigationContainer>

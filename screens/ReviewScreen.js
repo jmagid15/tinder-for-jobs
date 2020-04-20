@@ -6,10 +6,6 @@ const ReviewScreen = ({navigation}) => {
     <View>
       <Text>Review Screen Boii</Text>
       <Text>Review Screen Boii</Text>
-      <Button
-        title="Go to Settings"
-        onPress={() => navigation.navigate('Settings')}
-      />
     </View>
   );
 }
