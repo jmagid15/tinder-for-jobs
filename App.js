@@ -4,7 +4,9 @@ import { Button } from 'react-native-elements';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
+import { Provider } from 'react-redux';
 
+import store from './store';
 import AuthScreen from './screens/AuthScreen';
 import WelcomeScreen from './screens/WelcomeScreen';
 import MapScreen from './screens/MapScreen';
@@ -50,13 +52,15 @@ const Main = () => {
 
 const App = () => {
   return (
-    <NavigationContainer>
-      <AppFlowTabNavigator.Navigator>
-      <AppFlowTabNavigator.Screen name='Welcome' component={WelcomeScreen}/>
-        <AppFlowTabNavigator.Screen name='Auth' component={AuthScreen}/>
-        <AppFlowTabNavigator.Screen name='Main' component={Main} />
-      </AppFlowTabNavigator.Navigator>
-    </NavigationContainer>
+    <Provider store={store}>
+      <NavigationContainer>
+        <AppFlowTabNavigator.Navigator screenOptions={{ tabBarVisible: false }}>
+          <AppFlowTabNavigator.Screen name='Welcome' component={WelcomeScreen} />
+          <AppFlowTabNavigator.Screen name='Auth' component={AuthScreen} />
+          <AppFlowTabNavigator.Screen name='Main' component={Main} />
+        </AppFlowTabNavigator.Navigator>
+      </NavigationContainer>
+    </Provider>
   );
 };
 
