@@ -1,12 +1,17 @@
-import React, { Component } from 'react'
-import { View, Text } from 'react-native'
+import React, { Component } from 'react';
+import { View, Button, AsyncStorage } from 'react-native';
 
 class SettingsScreen extends Component {
     render() {
         return (
-            <View>
-                <Text>Settings Screen Boii</Text>
-                <Text>Settings Screen Boii</Text>
+            <View style={{flex: 1, alignItems: "center", justifyContent: "center"}}>
+                <Button 
+                    title="Clear Async Storage"
+                    onPress={() => {
+                        // ~TEST~ Clear the fb token for debugging/ testing
+                        AsyncStorage.removeItem('fb_token');
+                    }}
+                />
             </View>
         );
     }
