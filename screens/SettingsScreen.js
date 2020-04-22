@@ -6,7 +6,7 @@ class SettingsScreen extends Component {
         return (
             <View style={{flex: 1, alignItems: "center", justifyContent: "center"}}>
                 <Button 
-                    title="Clear Async Storage"
+                    title="Logout"
                     onPress={() => {
                         // ~TEST~ Clear the fb token for debugging/ testing
                         AsyncStorage.removeItem('fb_token');
