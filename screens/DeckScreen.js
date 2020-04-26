@@ -71,7 +71,7 @@ const styles = {
 }
 
 function mapStateToProps ({ jobs }) {
-  return { jobs: jobs.results };
+  return { jobs };
 }
 
 export default connect(mapStateToProps, actions)(DeckScreen);
