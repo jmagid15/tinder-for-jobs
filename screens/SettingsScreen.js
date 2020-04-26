@@ -1,10 +1,20 @@
 import React, { Component } from 'react';
-import { View, Button, AsyncStorage } from 'react-native';
+import { View, AsyncStorage } from 'react-native';
+import { Button } from 'react-native-elements';
+import { connect } from 'react-redux';
+import { clearLikedJobs } from '../actions';
 
 class SettingsScreen extends Component {
     render() {
         return (
-            <View style={{flex: 1, alignItems: "center", justifyContent: "center"}}>
+            <View style={{flex: 1, alignItems: "center", justifyContent: "space-around"}}>
+                <Button
+                    title="Reset Liked Jobs"
+                    large
+                    icon={{ name: 'delete-forever' }}
+                    buttonStyle={{ backgroundColor: "#F44336" }}
+                    onPress={this.props.clearLikedJobs}
+                />
                 <Button 
                     title="Logout"
                     onPress={() => {
@@ -17,4 +27,4 @@ class SettingsScreen extends Component {
     }
 }
 
-export default SettingsScreen;
+export default connect(null, { clearLikedJobs })(SettingsScreen);

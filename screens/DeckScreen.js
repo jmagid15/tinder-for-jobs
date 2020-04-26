@@ -7,7 +7,7 @@ import Swipe from '../components/Swipe';
 import * as actions from '../actions';
 
 class DeckScreen extends Component {
-  renderCard(job) {
+  renderCard = (job) => {
     const initialRegion = {
       longitude: Number(job.restaurant.location.longitude),
       latitude: Number(job.restaurant.location.latitude),
@@ -33,15 +33,21 @@ class DeckScreen extends Component {
     );
   }
 
-  renderNoMoreCards() {
+  renderNoMoreCards = () => {
     return (
-      <Card title="No more restaurants">
+      <Card title="No More Restaurants">
+        <Button 
+          title="Back To Map"
+          large
+          icon={{ name: 'my-location' }}
+          buttonStyle={{ backgroundColor: "#03A9F4" }}
+          onPress={() => this.props.navigation.navigate('Map')}
+        />
       </Card>
     );
   }
 
   render() {
-    // console.log(this.props.jobs)
     return (
       <View style={{ marginTop: 50 }}>
         <Swipe
@@ -65,7 +71,7 @@ const styles = {
 }
 
 function mapStateToProps ({ jobs }) {
-  return { jobs };
+  return { jobs: jobs.results };
 }
 
 export default connect(mapStateToProps, actions)(DeckScreen);

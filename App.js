@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import { Button } from 'react-native-elements';
+import { Button, Icon } from 'react-native-elements';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -42,10 +42,39 @@ const Review = () => {
 
 const Main = () => {
   return (
-    <MainTabNavigator.Navigator>
-      <MainTabNavigator.Screen name='Map' component={MapScreen} />
-      <MainTabNavigator.Screen name='Deck' component={DeckScreen} />
-      <MainTabNavigator.Screen name='Review' component={Review} />
+    <MainTabNavigator.Navigator 
+      tabBarPosition= 'bottom'
+      tabBarOptions={{ labelStyle: {fontSize: 12} }}
+    >
+      <MainTabNavigator.Screen 
+        name='Map' 
+        component={MapScreen} 
+        options={{ 
+          tabBarIcon: ({ color, size }) => {
+            return <Icon name="my-location" size={size} color={color} />
+          }
+        }}
+      />
+      <MainTabNavigator.Screen 
+        name='Deck' 
+        component={DeckScreen} 
+        options={{ 
+          tabBarLabel: 'Restaurants',
+          tabBarIcon: ({ color, size }) => {
+            return <Icon name="restaurant" size={size} color={color} />
+          }
+        }}
+      />
+      <MainTabNavigator.Screen 
+        name='Review' 
+        component={Review} 
+        options={{ 
+          tabBarLabel: 'Liked Restaurants',
+          tabBarIcon: ({ color, size }) => {
+            return <Icon name="favorite" size={size} color={color} />
+          }
+        }}
+      />
     </MainTabNavigator.Navigator>
   )
 }
@@ -65,12 +94,3 @@ const App = () => {
 };
 
 export default App;
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});

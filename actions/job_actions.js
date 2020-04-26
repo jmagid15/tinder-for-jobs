@@ -10,7 +10,8 @@ import {
 
 import {
   FETCH_JOBS,
-  LIKE_JOB
+  LIKE_JOB,
+  CLEAR_LIKED_JOBS
 } from './types';
 
 const JOB_ROOT_URL = 'https://developers.zomato.com/api/v2.1/geocode?';
@@ -64,5 +65,11 @@ export const likeJob = (job) => {
   return {
     payload: job.restaurant,
     type: LIKE_JOB
+  }
+}
+
+export const clearLikedJobs = () => {
+  return {
+    type: CLEAR_LIKED_JOBS
   }
 }
