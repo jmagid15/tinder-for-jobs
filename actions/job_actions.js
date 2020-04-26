@@ -9,7 +9,8 @@ import {
 } from '../creds';
 
 import {
-  FETCH_JOBS
+  FETCH_JOBS,
+  LIKE_JOB
 } from './types';
 
 const JOB_ROOT_URL = 'https://developers.zomato.com/api/v2.1/geocode?';
@@ -58,3 +59,10 @@ export const fetchJobs = (region, navigateCallback) => {
     }
   };
 };
+
+export const likeJob = (job) => {
+  return {
+    payload: job.restaurant,
+    type: LIKE_JOB
+  }
+}
