@@ -1,18 +1,18 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
 import { Button, Icon } from 'react-native-elements';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import { Provider } from 'react-redux';
 
-import store from './store';
 import AuthScreen from './screens/AuthScreen';
 import WelcomeScreen from './screens/WelcomeScreen';
 import MapScreen from './screens/MapScreen';
 import DeckScreen from './screens/DeckScreen';
 import SettingsScreen from './screens/SettingsScreen';
 import ReviewScreen from './screens/ReviewScreen';
+import { PersistGate } from 'redux-persist/integration/react';
+import configurationStore from './store';
 
 const AppFlowTabNavigator = createBottomTabNavigator();
 const MainTabNavigator = createBottomTabNavigator();
@@ -79,16 +79,20 @@ const Main = () => {
   )
 }
 
+const { store, persistor } = configurationStore();
+
 const App = () => {
   return (
     <Provider store={store}>
-      <NavigationContainer>
-        <AppFlowTabNavigator.Navigator screenOptions={{ tabBarVisible: false }}>
-          <AppFlowTabNavigator.Screen name='Welcome' component={WelcomeScreen} />
-          <AppFlowTabNavigator.Screen name='Auth' component={AuthScreen} />
-          <AppFlowTabNavigator.Screen name='Main' component={Main} />
-        </AppFlowTabNavigator.Navigator>
-      </NavigationContainer>
+      <PersistGate persistor={persistor}>
+        <NavigationContainer>
+          <AppFlowTabNavigator.Navigator screenOptions={{ tabBarVisible: false }}>
+            <AppFlowTabNavigator.Screen name='Welcome' component={WelcomeScreen} />
+            <AppFlowTabNavigator.Screen name='Auth' component={AuthScreen} />
+            <AppFlowTabNavigator.Screen name='Main' component={Main} />
+          </AppFlowTabNavigator.Navigator>
+        </NavigationContainer>
+      </PersistGate>
     </Provider>
   );
 };
