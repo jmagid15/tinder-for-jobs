@@ -4,6 +4,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import { Provider } from 'react-redux';
+import { Notifications } from 'expo';
 
 import AuthScreen from './screens/AuthScreen';
 import WelcomeScreen from './screens/WelcomeScreen';
@@ -13,6 +14,7 @@ import SettingsScreen from './screens/SettingsScreen';
 import ReviewScreen from './screens/ReviewScreen';
 import { PersistGate } from 'redux-persist/integration/react';
 import configurationStore from './store';
+import registerForNotifications from './services/push_notifications';
 
 const AppFlowTabNavigator = createBottomTabNavigator();
 const MainTabNavigator = createBottomTabNavigator();
@@ -81,20 +83,30 @@ const Main = () => {
 
 const { store, persistor } = configurationStore();
 
-const App = () => {
-  return (
-    <Provider store={store}>
-      <PersistGate persistor={persistor}>
-        <NavigationContainer>
-          <AppFlowTabNavigator.Navigator screenOptions={{ tabBarVisible: false }}>
-            <AppFlowTabNavigator.Screen name='Welcome' component={WelcomeScreen} />
-            <AppFlowTabNavigator.Screen name='Auth' component={AuthScreen} />
-            <AppFlowTabNavigator.Screen name='Main' component={Main} />
-          </AppFlowTabNavigator.Navigator>
-        </NavigationContainer>
-      </PersistGate>
-    </Provider>
-  );
+class App extends Component {
+  componentDidMount() {
+    registerForNotifications();
+    Notifications.addListener((notification) => {
+      console.log('Notification: ', notification);
+      // Handle notification further
+    });
+  }
+
+  render() {
+    return (
+      <Provider store={store}>
+        <PersistGate persistor={persistor}>
+          <NavigationContainer>
+            <AppFlowTabNavigator.Navigator screenOptions={{ tabBarVisible: false }}>
+              <AppFlowTabNavigator.Screen name='Welcome' component={WelcomeScreen} />
+              <AppFlowTabNavigator.Screen name='Auth' component={AuthScreen} />
+              <AppFlowTabNavigator.Screen name='Main' component={Main} />
+            </AppFlowTabNavigator.Navigator>
+          </NavigationContainer>
+        </PersistGate>
+      </Provider>
+    );
+  }
 };
 
 export default App;
